@@ -11,26 +11,36 @@ format:
 library(palmerpenguins)
 library(dplyr)
 library(ggplot2)
+library(dbplyr)
+library(DBI)
+library(duckdb)
 
-df <- palmerpenguins::penguins
+con <- DBI::dbConnect(
+  duckdb::duckdb(), 
+  dbdir = "my-db.duckdb"
+  )
+
+
+df <- dplyr::tbl(con, "penguins")
 ```
 
 ```{r}
-df %>%
-  group_by(species, sex) %>%
+df |> 
+  group_by(species, sex) |> 
+  collect() |> 
   summarise(
     across(
       where(is.numeric), 
       \(x) mean(x, na.rm = TRUE)
       )
-    ) %>%
+    ) |> 
   knitr::kable()
 ```
 
 ## Penguin Size vs Mass by Species
 
 ```{r}
-df %>%
+df |> 
   ggplot(aes(x = bill_length_mm, y = body_mass_g, color = species)) +
   geom_point() + 
   geom_smooth(method = "lm")
