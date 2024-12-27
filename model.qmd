@@ -14,7 +14,7 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from pins import board_folder
-from vetiver import vetiver_pin_write, VetiverModel
+from vetiver import vetiver_pin_write, VetiverModel, VetiverAPI
 ```
 
 ```{python}
@@ -43,7 +43,7 @@ print(f"Columns {X.columns}")
 print(f"Coefficients {model.coef_}")
 ```
 
-## save model
+## Save model
 
 ```{python}
 
@@ -55,4 +55,27 @@ model_board = board_folder(
 vetiver_pin_write(model_board, v)
 
 ```
+
+
+
+## Serve model from pin
+
+```{python}
+
+b = board_folder('~/data/model', allow_pickle_read = True)
+v = VetiverModel.from_pin(b, 'penguin_model')
+
+```
+
+## Serve the model
+
+```{python}
+
+app = VetiverAPI(v, check_prototype = True)
+
+app.run(port = 8080)
+
+```
+
+
 
