@@ -1,0 +1,10 @@
+venv_path <- reticulate::virtualenv_starter(version = "3.13.1")
+renv::use_python(python = venv_path)
+
+reticulate::py_install("jupyter")
+reticulate::py_install("pandas")
+reticulate::py_install("numpy")
+reticulate::py_install("palmerpenguins")
+reticulate::py_install("scikit-learn")
+reticulate::py_install("vetiver")
+reticulate::py_install("pins")
