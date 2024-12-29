@@ -15,12 +15,13 @@ from sklearn.linear_model import LinearRegression
 from sklearn import preprocessing
 from pins import board_folder
 from vetiver import vetiver_pin_write, VetiverModel, VetiverAPI
+import duckdb
 ```
 
 ```{python}
-df = penguins.load_penguins().dropna()
-
-df.head(3)
+con = duckdb.connect('my-db.duckdb')
+df = con.execute("SELECT * FROM penguins").fetchdf().dropna()
+con.close()
 ```
 
 
