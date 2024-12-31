@@ -1,0 +1,87 @@
+---
+title: "Model"
+format:
+  html:
+    code-fold: true
+---
+
+## Get Data
+
+```{r}
+library(vetiver)
+library(duckdb)
+library(palmerpenguins)
+library(dplyr)
+library(pins)
+library(fs)
+library(plumber)
+```
+
+```{r}
+df <- 
+ penguins |> 
+  filter(
+    if_all(everything(), \(x) !is.na(x))
+  )
+  
+```
+
+
+## Define Model and Fit
+
+```{r}
+model <- lm( body_mass_g ~ bill_length_mm + species + sex, df)
+summary(model)
+```
+```{r}
+
+prototype <- 
+  df |> 
+  select(bill_length_mm, species, sex) |> 
+  head(1)
+  
+v_model <- vetiver_model(
+  model, 
+  model_name = "penguin_model", 
+  save_prototype = prototype
+)
+```
+
+
+
+## Save model
+
+```{r}
+model_board <- 
+  board_folder(
+    path = fs::path_wd("data/models/"),
+    versioned = TRUE 
+  )
+
+vetiver_pin_write(
+  vetiver_model = v_model,
+  board = model_board,
+  check_renv = TRUE
+)
+```
+
+## Serve model from pin
+
+```{r}
+pin_board <- board_folder(fs::path_wd("data/models/"))
+
+v_model_from_pin <- vetiver_pin_read(
+  board = pin_board,
+  name = "penguin_model"
+)
+
+```
+
+
+## Serve the model
+
+```{r}
+pr() |> 
+  vetiver_api(v_model_from_pin) |> 
+  pr_run(port = 8080)
+```
