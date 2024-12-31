@@ -281,6 +281,16 @@
       "Repository": "RSPM",
       "Hash": "14eb0596f987c71535d07c3aff814742"
     },
+    "config": {
+      "Package": "config",
+      "Version": "0.3.2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "yaml"
+      ],
+      "Hash": "8b7222e9d9eb5178eea545c0c4d33fc2"
+    },
     "cpp11": {
       "Package": "cpp11",
       "Version": "0.5.1",
@@ -749,6 +759,13 @@
         "rlang"
       ],
       "Hash": "f2a94f8fc9db382a642e965339635ad6"
+    },
+    "log4r": {
+      "Package": "log4r",
+      "Version": "0.4.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Hash": "848a2b076b9f6b6cccfba36fd12a6bf1"
     },
     "magrittr": {
       "Package": "magrittr",
