@@ -1,6 +1,8 @@
 library(shiny)
 library(log4r)
 
+config <- config::get()
+
 log <- log4r::logger()
 
 log4r::info(log, "App Started")
@@ -16,8 +18,8 @@ ui <- fluidPage(
       sliderInput(
         "bill_length",
         "Bill Length (mm)",
-        min = 30,
-        max = 60,
+        min = config$min,
+        max = config$max,
         value = 45,
         step = 0.1
       ),
@@ -84,3 +86,4 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
