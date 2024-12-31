@@ -19,7 +19,7 @@ ui <- fluidPage(
       selectInput(
         "sex",
         "Sex",
-        c("Male", "Female")
+        c("male", "female")
       ),
       selectInput(
         "species",
@@ -45,11 +45,10 @@ ui <- fluidPage(
 server <- function(input, output) {
   # Input params
   vals <- reactive(
-    list(
+    tibble(
       bill_length_mm = input$bill_length,
-      species_Chinstrap = input$species == "Chinstrap",
-      species_Gentoo = input$species == "Gentoo",
-      sex_male = input$sex == "Male"
+      species = input$species,
+      sex = input$sex
     )
   )
 
@@ -64,7 +63,7 @@ server <- function(input, output) {
   )
 
   # Render to UI
-  output$pred <- renderText(pred()$predict[[1]])
+  output$pred <- renderText(pred()$.pred)
   output$vals <- renderPrint(vals())
 }
 
