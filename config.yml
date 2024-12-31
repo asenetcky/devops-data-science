@@ -1,0 +1,3 @@
+default:
+  min: 30
+  max: 60
