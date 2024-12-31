@@ -1,4 +1,9 @@
 library(shiny)
+library(log4r)
+
+log <- log4r::logger()
+
+log4r::info(log, "App Started")
 
 api_url <- "http://127.0.0.1:8080/predict"
 
@@ -52,13 +57,23 @@ server <- function(input, output) {
     )
   )
 
-  # Fetch prediction from API
   pred <- eventReactive(
     input$predict,
-    httr2::request(api_url) |>
-      httr2::req_body_json(vals()) |>
-      httr2::req_perform() |>
-      httr2::resp_body_json(),
+    {
+      log4r::info(log, "Prediction Requested")
+
+      r <- httr2::request(api_url) |>
+        httr2::req_body_json(vals()) |>
+        httr2::req_perform()
+
+      log4r::info(log, "Prediction Returned")
+
+      if (httr2::resp_is_error(r)) {
+        log4r::error(log, paste("HTTP Error"))
+      }
+
+      httr2::resp_body_json(r)
+    },
     ignoreInit = TRUE
   )
 
