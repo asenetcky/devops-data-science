@@ -12,11 +12,6 @@
       }
     ]
   },
-  "Python": {
-    "Version": "3.13.1",
-    "Type": "virtualenv",
-    "Name": "./renv/python/virtualenvs/renv-python-3.13"
-  },
   "Packages": {
     "DBI": {
       "Package": "DBI",
@@ -139,7 +134,7 @@
       "Package": "bslib",
       "Version": "0.8.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "base64enc",
@@ -183,7 +178,7 @@
       "Package": "colorspace",
       "Version": "2.1-1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "grDevices",
@@ -264,7 +259,7 @@
       "Package": "digest",
       "Version": "0.6.37",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "utils"
@@ -311,7 +306,7 @@
       "Package": "evaluate",
       "Version": "1.0.1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R"
       ],
@@ -347,7 +342,7 @@
       "Package": "fontawesome",
       "Version": "0.5.3",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "htmltools",
@@ -359,7 +354,7 @@
       "Package": "fs",
       "Version": "1.6.5",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "methods"
@@ -417,7 +412,7 @@
       "Package": "gtable",
       "Version": "0.3.6",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "cli",
@@ -537,7 +532,7 @@
       "Package": "knitr",
       "Version": "1.49",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "evaluate",
@@ -686,7 +681,7 @@
       "Package": "palmerpenguins",
       "Version": "0.1.1",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R"
       ],
@@ -783,7 +778,7 @@
       "Package": "reticulate",
       "Version": "1.40.0",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "Matrix",
         "R",
@@ -816,7 +811,7 @@
       "Package": "rmarkdown",
       "Version": "2.29",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "bslib",
@@ -1021,7 +1016,7 @@
       "Package": "tinytex",
       "Version": "0.54",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "xfun"
       ],
@@ -1077,7 +1072,7 @@
       "Package": "xfun",
       "Version": "0.49",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Requirements": [
         "R",
         "grDevices",
@@ -1102,7 +1097,7 @@
       "Package": "yaml",
       "Version": "2.3.10",
       "Source": "Repository",
-      "Repository": "RSPM",
+      "Repository": "P3M",
       "Hash": "51dab85c6c98e50a18d7551e9d49f76c"
     }
   }
