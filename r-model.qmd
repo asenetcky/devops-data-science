@@ -17,13 +17,31 @@ library(fs)
 library(plumber)
 ```
 
-```{r}
+```{r original-df}
+#| eval: false
+#| include: false
+
+
 df <- 
  penguins |> 
   filter(
     if_all(everything(), \(x) !is.na(x))
   )
   
+```
+
+```{r db-df}
+con <- DBI::dbConnect(
+  duckdb::duckdb(), 
+  dbdir = "my-db.duckdb"
+  )
+
+df <- 
+  dplyr::tbl(con, "penguins") |> 
+  filter(
+    if_all(everything(), \(x) !is.na(x))
+  )
+
 ```
 
 
@@ -78,10 +96,46 @@ v_model_from_pin <- vetiver_pin_read(
 ```
 
 
-## Serve the model
+## db setup
+
+```{r}
+#| eval: false
+#| include: false
+
+con <- DBI::dbConnect(duckdb::duckdb(), dbdir = "my-db.duckdb")
+DBI::dbWriteTable(con, "penguins", palmerpenguins::penguins)
+DBI::dbDisconnect(con)
+
+```
+
+
+
+
+## deploy the model
 
 ```{r}
 pr() |> 
   vetiver_api(v_model_from_pin) |> 
   pr_run(port = 8080)
 ```
+## model endpoint
+
+```{r}
+endpoint <- vetiver_endpoint("http://127.0.0.1:8080/predict")
+endpoint
+
+```
+
+## predictions
+
+```{r}
+new_penguins <- 
+  df |> 
+  slice_sample(n = 20) |> 
+  select(bill_length_mm, species, sex)
+
+predict(endpoint, new_penguins)
+
+```
+
+
