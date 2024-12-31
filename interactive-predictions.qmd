@@ -1,0 +1,78 @@
+---
+title: "interactive-predictions"
+format:
+  html:
+    code-fold: true
+---
+
+## Get Data
+
+```{r}
+library(vetiver)
+library(duckdb)
+library(palmerpenguins)
+library(dplyr)
+library(pins)
+library(fs)
+library(plumber)
+```
+
+```{r}
+df <- 
+ penguins |> 
+  filter(
+    if_all(everything(), \(x) !is.na(x))
+  )
+  
+```
+
+
+## model endpoint
+
+```{r}
+endpoint <- vetiver_endpoint("http://127.0.0.1:8080/predict")
+endpoint
+
+```
+
+By now the api in `bkgd-r-api.R` should be running in the background
+as an RStudio background job.
+
+
+## predictions
+
+```{r}
+new_penguins <- 
+  df |> 
+  slice_sample(n = 20) |> 
+  select(bill_length_mm, species, sex)
+
+predict(endpoint, new_penguins)
+
+```
+
+
+## testing shiny bits
+
+```{r}
+
+api_url <- "http://127.0.0.1:8080/predict"
+
+vals <- 
+    tibble(
+      bill_length_mm = 39.1,
+      species = "Chinstrap",
+      sex = "male"
+    )
+
+  # Fetch prediction from API
+  pred <- 
+    httr2::request(api_url) |>
+      httr2::req_body_json(vals) |>
+      httr2::req_perform() |>
+      httr2::resp_body_json()
+
+  pred
+  
+```
+

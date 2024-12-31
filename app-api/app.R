@@ -1,4 +1,9 @@
 library(shiny)
+library(log4r)
+
+log <- log4r::logger()
+
+log4r::info(log, "App Started")
 
 api_url <- "http://127.0.0.1:8080/predict"
 
@@ -19,7 +24,7 @@ ui <- fluidPage(
       selectInput(
         "sex",
         "Sex",
-        c("Male", "Female")
+        c("male", "female")
       ),
       selectInput(
         "species",
@@ -45,26 +50,35 @@ ui <- fluidPage(
 server <- function(input, output) {
   # Input params
   vals <- reactive(
-    list(
+    tibble(
       bill_length_mm = input$bill_length,
-      species_Chinstrap = input$species == "Chinstrap",
-      species_Gentoo = input$species == "Gentoo",
-      sex_male = input$sex == "Male"
+      species = input$species,
+      sex = input$sex
     )
   )
 
-  # Fetch prediction from API
   pred <- eventReactive(
     input$predict,
-    httr2::request(api_url) |>
-      httr2::req_body_json(vals()) |>
-      httr2::req_perform() |>
-      httr2::resp_body_json(),
+    {
+      log4r::info(log, "Prediction Requested")
+
+      r <- httr2::request(api_url) |>
+        httr2::req_body_json(vals()) |>
+        httr2::req_perform()
+
+      log4r::info(log, "Prediction Returned")
+
+      if (httr2::resp_is_error(r)) {
+        log4r::error(log, paste("HTTP Error"))
+      }
+
+      httr2::resp_body_json(r)
+    },
     ignoreInit = TRUE
   )
 
   # Render to UI
-  output$pred <- renderText(pred()$predict[[1]])
+  output$pred <- renderText(pred()$.pred)
   output$vals <- renderPrint(vals())
 }
 
