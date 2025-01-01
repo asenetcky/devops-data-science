@@ -1,6 +1,8 @@
 library(shiny)
 library(log4r)
 
+config <- config::get()
+
 log <- log4r::logger()
 
 log4r::info(log, "App Started")
@@ -16,8 +18,8 @@ ui <- fluidPage(
       sliderInput(
         "bill_length",
         "Bill Length (mm)",
-        min = 30,
-        max = 60,
+        min = config$min,
+        max = config$max,
         value = 45,
         step = 0.1
       ),
@@ -50,7 +52,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   # Input params
   vals <- reactive(
-    tibble(
+    dplyr::tibble(
       bill_length_mm = input$bill_length,
       species = input$species,
       sex = input$sex
@@ -84,3 +86,4 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
