@@ -4,7 +4,7 @@ library(pins)
 library(plumber)
 library(rapidoc)
 library(vetiver)
-b <- board_folder(path = "~/data/models")
+b <- board_folder(path = "/data/models")
 v <- vetiver_pin_read(b, "penguin_model")
 
 #* @plumber
