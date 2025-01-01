@@ -52,7 +52,7 @@ ui <- fluidPage(
 server <- function(input, output) {
   # Input params
   vals <- reactive(
-    tibble(
+    dplyr::tibble(
       bill_length_mm = input$bill_length,
       species = input$species,
       sex = input$sex

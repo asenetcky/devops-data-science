@@ -56,7 +56,8 @@ summary(model)
 prototype <- 
   df |> 
   select(bill_length_mm, species, sex) |> 
-  head(1)
+  head(1) |> 
+  collect()
   
 v_model <- vetiver_model(
   model, 
