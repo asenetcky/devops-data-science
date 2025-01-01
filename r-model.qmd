@@ -73,7 +73,7 @@ v_model <- vetiver_model(
 ```{r}
 model_board <- 
   board_folder(
-    path = fs::path_wd("data/models/"),
+    path = "~/data/models/",
     versioned = TRUE 
   )
 
@@ -87,7 +87,7 @@ vetiver_pin_write(
 ## Serve model from pin
 
 ```{r}
-pin_board <- board_folder(fs::path_wd("data/models/"))
+pin_board <- board_folder("~/data/models/")
 
 v_model_from_pin <- vetiver_pin_read(
   board = pin_board,
